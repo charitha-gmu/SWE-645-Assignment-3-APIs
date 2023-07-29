@@ -14,63 +14,63 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller // This means that this class is a Controller
-@RequestMapping(path = "/surveydata") // This means URL's start with /demo (after Application path)
+@RequestMapping(path = "/") // This means URL's start with /demo (after Application path)
 public class SurveyController {
 
-    private SurveyRepo surveyRepository;
+    private SurveyRepo surveyDataRepo;
 
     @Autowired
-    public SurveyController(SurveyRepo surveyRepository) {
-        this.surveyRepository = surveyRepository;
+    public SurveyController(SurveyRepo surveyDataRepo) {
+        this.surveyDataRepo = surveyDataRepo;
     }
 
     @PostMapping(path = "/add") // Map ONLY POST Requests
     public ResponseEntity<String> addSurveyData(@RequestBody Surveydata surveydata) {
 
-        Surveydata n = new Surveydata();
-        n.setFirstName(surveydata.firstName);
-        n.setLastName(surveydata.lastName);
-        n.setStreetAddress(surveydata.streetAddress);
-        n.setCity(surveydata.city);
-        n.setState(surveydata.state);
-        n.setZip(surveydata.zip);
-        n.setPhoneNumber(surveydata.phoneNumber);
-        n.setEmail(surveydata.email);
-        n.setDateOfSurvey(surveydata.dateOfSurvey);
-        n.setLikedMost(surveydata.likedMost);
-        n.setInterestedIn(surveydata.interestedIn);
-        n.setLikelihoodOfRecommendation(surveydata.likelihoodOfRecommendation);
-        surveyRepository.save(n);
-        return ResponseEntity.ok("Data Saved");
+        Surveydata newData = new Surveydata();
+        newData.setFirstName(surveydata.firstName);
+        newData.setLastName(surveydata.lastName);
+        newData.setStreetAddress(surveydata.streetAddress);
+        newData.setCity(surveydata.city);
+        newData.setState(surveydata.state);
+        newData.setZip(surveydata.zip);
+        newData.setPhoneNumber(surveydata.phoneNumber);
+        newData.setEmail(surveydata.email);
+        newData.setDateOfSurvey(surveydata.dateOfSurvey);
+        newData.setLikedMost(surveydata.likedMost);
+        newData.setInterestedIn(surveydata.interestedIn);
+        newData.setLikelihoodOfRecommendation(surveydata.likelihoodOfRecommendation);
+        surveyDataRepo.save(newData);
+        return ResponseEntity.ok("Information added Successfully");
     }
 
     @PostMapping(path = "/update/{surveyId}") // Map PUT Requests for updating a specific survey
     public ResponseEntity<String> updateSurveyData(@RequestBody Surveydata surveydata, @PathVariable Integer surveyId) {
 
         // Find the existing survey by its ID
-        Optional<Surveydata> existingSurveyOptional = surveyRepository.findById(surveyId);
+        Optional<Surveydata> currentSurveyOptional = surveyDataRepo.findById(surveyId);
 
-        if (existingSurveyOptional.isPresent()) {
-            Surveydata existingSurvey = existingSurveyOptional.get();
+        if (currentSurveyOptional.isPresent()) {
+            Surveydata currentSurvey = currentSurveyOptional.get();
 
             // Update the existing survey with the new data
-            existingSurvey.setFirstName(surveydata.firstName);
-            existingSurvey.setLastName(surveydata.lastName);
-            existingSurvey.setStreetAddress(surveydata.streetAddress);
-            existingSurvey.setCity(surveydata.city);
-            existingSurvey.setState(surveydata.state);
-            existingSurvey.setZip(surveydata.zip);
-            existingSurvey.setPhoneNumber(surveydata.phoneNumber);
-            existingSurvey.setEmail(surveydata.email);
-            existingSurvey.setDateOfSurvey(surveydata.dateOfSurvey);
-            existingSurvey.setLikedMost(surveydata.likedMost);
-            existingSurvey.setInterestedIn(surveydata.interestedIn);
-            existingSurvey.setLikelihoodOfRecommendation(surveydata.likelihoodOfRecommendation);
+            currentSurvey.setFirstName(surveydata.firstName);
+            currentSurvey.setLastName(surveydata.lastName);
+            currentSurvey.setStreetAddress(surveydata.streetAddress);
+            currentSurvey.setCity(surveydata.city);
+            currentSurvey.setState(surveydata.state);
+            currentSurvey.setZip(surveydata.zip);
+            currentSurvey.setPhoneNumber(surveydata.phoneNumber);
+            currentSurvey.setEmail(surveydata.email);
+            currentSurvey.setDateOfSurvey(surveydata.dateOfSurvey);
+            currentSurvey.setLikedMost(surveydata.likedMost);
+            currentSurvey.setInterestedIn(surveydata.interestedIn);
+            currentSurvey.setLikelihoodOfRecommendation(surveydata.likelihoodOfRecommendation);
 
             // Save the updated survey
-            surveyRepository.save(existingSurvey);
+            surveyDataRepo.save(currentSurvey);
 
-            return ResponseEntity.ok("Data Updated");
+            return ResponseEntity.ok("Information updated successfully");
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -80,12 +80,12 @@ public class SurveyController {
     public ResponseEntity<String> deleteSurveyById(@PathVariable Integer surveyId) {
 
         // Check if the survey exists in the database
-        Optional<Surveydata> existingSurveyOptional = surveyRepository.findById(surveyId);
+        Optional<Surveydata> currentSurveyOptional = surveyDataRepo.findById(surveyId);
 
-        if (existingSurveyOptional.isPresent()) {
+        if (currentSurveyOptional.isPresent()) {
             // If the survey exists, delete it from the database
-            surveyRepository.deleteById(surveyId);
-            return ResponseEntity.ok("Survey with ID " + surveyId + " deleted.");
+            surveyDataRepo.deleteById(surveyId);
+            return ResponseEntity.ok("Survey with ID " + surveyId + " deleted successfully.");
         } else {
             // If the survey doesn't exist, return a 404 Not Found response
             return ResponseEntity.notFound().build();
@@ -95,6 +95,6 @@ public class SurveyController {
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Surveydata> getSurveyData() {
 
-        return surveyRepository.findAll();
+        return surveyDataRepo.findAll();
     }
 }
