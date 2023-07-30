@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller // This means that this class is a Controller
-@RequestMapping(path = "/") // This means URL's start with /demo (after Application path)
+@Controller // Controller class
+@RequestMapping(path = "/") // This means URL's start with "/"
 public class SurveyController {
 
     private SurveyRepo surveyDataRepo;
@@ -24,7 +24,7 @@ public class SurveyController {
         this.surveyDataRepo = surveyDataRepo;
     }
 
-    @PostMapping(path = "/add") // Map ONLY POST Requests
+    @PostMapping(path = "/add") // Map add POST Request at /add endpoint
     public ResponseEntity<String> addSurveyData(@RequestBody Surveydata surveydata) {
 
         Surveydata newData = new Surveydata();
@@ -44,7 +44,7 @@ public class SurveyController {
         return ResponseEntity.ok("Information added Successfully");
     }
 
-    @PostMapping(path = "/update/{surveyId}") // Map PUT Requests for updating a specific survey
+    @PostMapping(path = "/update/{surveyId}") // Map Update Requests for updating a specific survey
     public ResponseEntity<String> updateSurveyData(@RequestBody Surveydata surveydata, @PathVariable Integer surveyId) {
 
         // Find the existing survey by its ID
