@@ -99,6 +99,7 @@ public class SurveyController {
         }
     }
 
+    // GET API to retrieve all the surveys present in the Amazon RDS Database
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Surveydata> getSurveyData() {
 
