@@ -3,6 +3,8 @@
 // 3.Sridevi Movva – G01417871
 // 4.Shreyas Kaup Vijayananda – G01386269
 
+// Surveydata file defines the model which includes all the data members / variables and member functions (getters and setters) which operate on the variables
+
 package com.example.demo;
 
 import jakarta.persistence.*;
@@ -11,6 +13,8 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "assignment3")
 public class Surveydata {
+
+    // Data members defined below
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,8 +56,7 @@ public class Surveydata {
     @Column(name = "likelihood_of_recommendation", nullable = false)
     public String likelihoodOfRecommendation;
 
-    // Constructors, getters, and setters
-
+    // Getter and setter methods defined below
 
     public Long getId() {
         return id;
