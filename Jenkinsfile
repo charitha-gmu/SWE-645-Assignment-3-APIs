@@ -31,7 +31,7 @@ pipeline{
 			steps{
 				script{
 				
-					sh 'kubectl rollout restart deploy assignment3 -n assignments'
+					sh 'kubectl rollout restart deploy assignment2 -n assignments'
 				}
 			}
 		}
